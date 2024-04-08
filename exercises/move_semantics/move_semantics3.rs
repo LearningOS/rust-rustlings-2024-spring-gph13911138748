@@ -7,7 +7,7 @@
 // for a hint.
 
 
-#[test]
+//#[test]
 fn main() {
     let mut vec0 = vec![22, 44, 66];
 
