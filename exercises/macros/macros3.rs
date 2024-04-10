@@ -5,8 +5,9 @@
 // Execute `rustlings hint macros3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
+// 定义宏的文件：macros.rs
+// 注意：文件名通常为 macros.rs
+#[macro_use]
 mod macros {
     macro_rules! my_macro {
         () => {
@@ -18,3 +19,4 @@ mod macros {
 fn main() {
     my_macro!();
 }
+
