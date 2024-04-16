@@ -27,12 +27,13 @@
 /// # Safety
 ///
 /// The `address` must contain a mutable reference to a valid `u32` value.
-unsafe fn modify_by_address(address: usize) {
+unsafe fn modify_by_address(address: usize) {//此时address是不可改的非mut的,需要想办法改
     // TODO: Fill your safety notice of the code block below to match your
     // code's behavior and the contract of this function. You may use the
     // comment of the test below as your format reference.
     unsafe {
-        todo!("Your code goes here")
+        let mut t = address as *mut u32;
+        *t = 0xAABBCCDD;
     }
 }
 
