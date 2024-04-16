@@ -22,5 +22,5 @@ fn main() {
     // Cargo about that.
     //let your_command = "rustc-cfg=pass".to_string();
     //println!("cargo:{}", your_command);
-    println!("cargo:rustc-cfg=pass");
+    println!("cargo:rustc-cfg= pass");
 }
