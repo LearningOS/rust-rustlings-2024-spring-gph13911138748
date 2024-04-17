@@ -28,13 +28,13 @@ struct LinkedList<T> {
     end: Option<NonNull<Node<T>>>,
 }
 
-impl<T> Default for LinkedList<T> {
+impl<T: std::cmp::PartialOrd + Clone> Default for LinkedList<T> {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl<T> LinkedList<T> {
+impl<T: std::cmp::PartialOrd + Clone> LinkedList<T> {
     pub fn new() -> Self {
         Self {
             length: 0,
@@ -80,14 +80,26 @@ impl<T> LinkedList<T> {
         if list_b.length == 0 {
             return list_b;
         }
-        let node1 = list_a.start;
-        let node2 = list_b.start;
-        while node1.is_some() && node2.is_some() {
-            if node1.val > node2.val {
-                list.add(node1.val.clone());
-
+        let mut node1_ptr = list_a.start;
+        let mut node2_ptr = list_b.start;
+        while let (Some(mut node1), Some(mut node2)) = (node1_ptr, node2_ptr) {
+            if unsafe { (*node1.as_ptr()).val.clone() } <= unsafe { (*node2.as_ptr()).val.clone() } {
+                list.add(unsafe { (*node1.as_ptr()).val.clone() });
+                node1_ptr = unsafe { (*node1.as_ptr()).next };
+            }else {
+                list.add(unsafe { (*node2.as_ptr()).val.clone() });
+                node2_ptr = unsafe { (*node2.as_ptr()).next };
             }
         }
+        while let Some(mut node1) = node1_ptr {
+            list.add(unsafe { (*node1.as_ptr()).val.clone() });
+            node1_ptr = unsafe { (*node1.as_ptr()).next };
+        }
+        while let Some(mut node2) = node2_ptr {
+            list.add(unsafe { (*node2.as_ptr()).val.clone() });
+            node2_ptr = unsafe { (*node2.as_ptr()).next };
+        }
+        list
 	}
 }
 
