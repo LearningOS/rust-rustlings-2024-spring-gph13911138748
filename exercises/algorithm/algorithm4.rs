@@ -2,7 +2,7 @@
 	binary_search tree
 	This problem requires you to implement a basic interface for a binary tree
 */
-//I AM NOT DONE
+
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
@@ -50,12 +50,50 @@ where
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
         //TODO
+        if self.root.is_none() {
+            self.root = Some(Box::new(TreeNode::new(value)));
+            return;
+        }
+        let mut root_node = &mut self.root;
+        while let Some(ref mut node) = root_node {
+            if node.value == value {
+                return;
+            }else if node.value < value {
+                if node.left.is_some() {
+                    root_node = &mut node.left;
+                }else {
+                    node.left = Some(Box::new(TreeNode::new(value)));
+                    return;
+                }
+            }else {
+                if node.right.is_some() {
+                    root_node = &mut node.right;
+                }else {
+                    node.right = Some(Box::new(TreeNode::new(value)));
+                    return;
+                }
+            }
+        }
+
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
         //TODO
-        true
+        if self.root.is_none() {
+            return false;
+        }
+        let mut root_node = &self.root;
+        while let Some(ref node) = root_node {
+            if node.value == value {
+                return true;
+            }else if node.value < value {
+                root_node = &node.left;
+            }else {
+                root_node = &node.right;
+            }
+        }
+        false
     }
 }
 
